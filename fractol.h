@@ -12,6 +12,13 @@
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
+
+# include "../libft/includes/libft.h"
+# include "minilibx/includes/mlx.h"
+# include <math.h>
+
+
+# define USAGE "usage: ./fractol [-1 | -2 | -3]"
 # define WIDTH 1600
 # define HEIGHT 900
 # define K_1 18
@@ -27,9 +34,6 @@
 # define K_UPARR 126
 # define K_DOWNARR 125
 
-# include "../libft/includes/libft.h"
-# include "../minilibx/includes/mlx.h"
-# include <math.h>
 
 /*
 **	STRUCTS
@@ -100,6 +104,9 @@ typedef struct	s_mlx
 	t_mouse		*mouse;
 	t_cam		*cam;
 }				t_mlx;
+
+
+int				ft_error(int err, char *ex);
 
 /*
 **	LIST OPS

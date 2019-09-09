@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/09 05:02:30 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/09 05:02:32 by rpapagna         ###   ########.fr       */
+/*   Created: 2019/09/09 05:02:40 by rpapagna          #+#    #+#             */
+/*   Updated: 2019/09/09 05:02:46 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fractol.h"
 
-int		main(int ac, char **av)
+int		ft_error(int err, char *ex)
 {
-	t_mlx	*mlx;
-
-	if (ac < 2)
-		return (ft_error(1, ""));
-	return (0);
+	if (err == 1)
+		ft_printf("%s\n", USAGE);
+	return (err);
 }

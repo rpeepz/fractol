@@ -18,7 +18,8 @@ RED		= \033[0;31m
 YELLOW	= \033[0;33m
 NC		= \033[0m
 
-SRC		= main.c
+SRC		= main.c \
+		error.c
 
 FLAGS	= -Wall -Wextra -Werror
 INC		= -I fractol.h
@@ -30,17 +31,6 @@ FT_LNK	= -L ./libft -l ft
 .PHONY:	all clean fclean re debug
 
 all:	$(NAME)
-
-$(NAME):
-		@make -C libft
-		@make -C minilibx_macos
-		@printf "[$(GREEN)fractol$(NC) ]\t[:##        :]\r"
-		@gcc $(FLAGS) $(addprefix src/,$(SRC)) $(INC) $(MLX_LNK) $(FT_LNK) -o $(NAME)
-		@printf "[$(GREEN)fractol$(NC) ]\t[:##########:]\n"
-
-debug:
-		@gcc $(FLAGS) -g $(addprefix src/,$(SRC)) $(MLX_LNK) $(FT_LNK) $(INC) -o $(NAME) -fsanitize=address
-		@printf "[$(YELLOW)debug   $(NC)]\t[$(RED):##########:$(NC)]\n"
 
 clean:
 		@make -C libft clean
@@ -57,3 +47,22 @@ fclean: clean
 		@printf "[$(RED)full  clean$(NC)]\t[:##########:]\n"
 
 re: fclean all
+
+$(NAME):
+		@make -C libft
+		@make -C minilibx_macos
+		@printf "[$(GREEN)fractol$(NC) ]\t[:##        :]\r"
+		@gcc $(FLAGS) $(addprefix src/,$(SRC)) $(INC) $(MLX_LNK) $(FT_LNK) -o $(NAME)
+		@printf "[$(GREEN)fractol$(NC) ]\t[:##########:]\n"
+
+debug:
+		@rm -rf $(NAME)
+		@rm -rf $(NAME).dSYM
+		@gcc $(FLAGS) -g $(addprefix src/,$(SRC)) $(MLX_LNK) $(FT_LNK) $(INC) -o $(NAME) -fsanitize=address
+		@printf "[$(YELLOW)debug   $(NC)]\t[$(RED):##########:$(NC)]\n"
+
+quick:
+		@rm -rf $(NAME)
+		@rm -rf $(NAME).dSYM
+		@gcc -Wall -Wextra -g $(addprefix src/,$(SRC)) $(MLX_LNK) $(FT_LNK) $(INC) -o $(NAME)
+		@printf "[$(YELLOW)make  quick$(NC)]\t[:##########:]\n"
