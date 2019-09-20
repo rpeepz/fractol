@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/09 00:09:32 by rpapagna          #+#    #+#              #
-#    Updated: 2019/05/20 17:09:29 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/09/19 14:49:01 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,10 @@ RED		= \033[0;31m
 YELLOW	= \033[0;33m
 NC		= \033[0m
 
-SRC		= main.c \
-		error.c
+SRC		= image.c \
+		init.c \
+		inputs.c \
+		main.c
 
 FLAGS	= -Wall -Wextra -Werror
 INC		= -I fractol.h
@@ -27,6 +29,9 @@ INC		= -I fractol.h
 MLX_LNK	= -L ./minilibx_macos -l mlx_macos -framework AppKit -framework OpenGL
 #LIB COMPILE ORDER
 FT_LNK	= -L ./libft -l ft
+#Objects
+OBJ_PATH= obj
+OBJ		= $(addprefix $(OBJ_PATH)/,$(SRC:.c=.o))
 
 .PHONY:	all clean fclean re debug
 
@@ -35,6 +40,7 @@ all:	$(NAME)
 clean:
 		@make -C libft clean
 		@make -C minilibx clean
+		@rm -r $(OBJ)
 		@printf "[$(RED)clean   mlx$(NC)]\t[:######    :]\r"
 		@make -C minilibx_macos clean
 		@printf "[$(RED)clean   mlx$(NC)]\t[:##########:]\r"
@@ -48,21 +54,32 @@ fclean: clean
 
 re: fclean all
 
-$(NAME):
+$(NAME):$(OBJ)
 		@make -C libft
 		@make -C minilibx_macos
 		@printf "[$(GREEN)fractol$(NC) ]\t[:##        :]\r"
-		@gcc $(FLAGS) $(addprefix src/,$(SRC)) $(INC) $(MLX_LNK) $(FT_LNK) -o $(NAME)
+		@gcc $(FLAGS) $(OBJ_PATH)/*.o $(MLX_LNK) $(FT_LNK) -o $(NAME)
 		@printf "[$(GREEN)fractol$(NC) ]\t[:##########:]\n"
 
 debug:
 		@rm -rf $(NAME)
 		@rm -rf $(NAME).dSYM
-		@gcc $(FLAGS) -g $(addprefix src/,$(SRC)) $(MLX_LNK) $(FT_LNK) $(INC) -o $(NAME) -fsanitize=address
-		@printf "[$(YELLOW)debug   $(NC)]\t[$(RED):##########:$(NC)]\n"
+		@gcc $(FLAGS) -g $(addprefix src/,$(SRC)) $(MLX_LNK) $(FT_LNK) $(INC) -o $(NAME)
+		@printf "[$(YELLOW)debug   $(NC)]\t[:##########:]\n"
 
-quick:
+sanitize:
+		@rm -rf $(NAME)
+		@rm -rf $(NAME).dSYM
+		@gcc $(FLAGS) -g $(addprefix src/,$(SRC)) $(MLX_LNK) $(FT_LNK) $(INC) -o $(NAME) -fsanitize=address
+		@printf "[$(YELLOW)sanitize$(NC)]\t[$(RED):##########:$(NC)]\n"
+
+q:
 		@rm -rf $(NAME)
 		@rm -rf $(NAME).dSYM
 		@gcc -Wall -Wextra -g $(addprefix src/,$(SRC)) $(MLX_LNK) $(FT_LNK) $(INC) -o $(NAME)
-		@printf "[$(YELLOW)make  quick$(NC)]\t[:##########:]\n"
+
+$(OBJ_PATH):
+		@mkdir -p $@
+
+$(OBJ_PATH)/%.o: src/%.c | $(OBJ_PATH)
+		@gcc $(FLAGS) $(INC) -o $@ -c $<
