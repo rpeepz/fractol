@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol.h                                              :+:      :+:    :+:   */
+/*   fractol.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 02:06:55 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/05/22 18:04:26 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/21 16:49:40 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,9 @@
 # include "keys.h"
 # include <math.h>
 
-
 # define USAGE "usage: ./fractol [-1 | -2 | -3]"
-# define WIDTH 400
-# define HEIGHT 600
-
+# define WIDTH 1000
+# define HEIGHT 1000
 
 /*
 **	STRUCTS
@@ -81,7 +79,6 @@ t_image			*new_image(t_frac *frac);
 t_image			*del_image(t_frac *frac, t_image *img);
 
 void			render(t_frac *frac);
-
 
 /*
 **	INPUTS

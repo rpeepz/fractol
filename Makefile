@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/09 00:09:32 by rpapagna          #+#    #+#              #
-#    Updated: 2019/09/19 14:49:01 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/09/21 16:48:39 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ all:	$(NAME)
 clean:
 		@make -C libft clean
 		@make -C minilibx clean
-		@rm -r $(OBJ)
+		@rm -rf $(OBJ)
 		@printf "[$(RED)clean   mlx$(NC)]\t[:######    :]\r"
 		@make -C minilibx_macos clean
 		@printf "[$(RED)clean   mlx$(NC)]\t[:##########:]\r"

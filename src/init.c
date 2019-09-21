@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 13:14:09 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/19 14:35:52 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/21 16:50:53 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_frac			*fracdel(t_frac *frac)
 	return (NULL);
 }
 
-t_frac		*init(char *title)
+t_frac			*init(char *title)
 {
 	t_frac	*frac;
 
@@ -36,9 +36,9 @@ t_frac		*init(char *title)
 		!(frac->cam = ft_memalloc(sizeof(t_cam))) ||
 		!(frac->image = new_image(frac)))
 		return (fracdel(frac));
-	frac->cam->x = 0.8;
+	frac->cam->x = 0.0;
 	frac->cam->y = 0.0;
-	frac->cam->scale = 32;
+	frac->cam->scale = 0;
 	frac->cam->offsetx = WIDTH / 2;
 	frac->cam->offsety = HEIGHT / 2;
 	return (frac);
