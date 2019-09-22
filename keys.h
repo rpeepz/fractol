@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 20:37:57 by myoung            #+#    #+#             */
-/*   Updated: 2019/09/21 16:50:13 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/21 20:54:30 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@
 # define KEY_N 45
 # define KEY_M 46
 # define KEY_TAB 48
+# define KEY_SPACE 49
 # define KEY_ESC 53
 # define KEY_PLUS 69
 # define KEY_MINUS 78
@@ -73,8 +74,8 @@
 # define KEY_DOWN 125
 # define KEY_UP 126
 
-# define SCROLL_UP		4
-# define SCROLL_DOWN	5
+# define SCRL_UP 4
+# define SCRL_DWN 5
 
 typedef struct	s_keys
 {
