@@ -24,6 +24,7 @@
 *.pdb
 
 # Extra
+._*
 .DS_Store
 .vscode/
 *.gen

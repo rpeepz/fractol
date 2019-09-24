@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/01/04 20:37:57 by myoung            #+#    #+#             */
-/*   Updated: 2019/09/21 20:54:30 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/23 18:45:17 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@
 # define KEY_DOWN 125
 # define KEY_UP 126
 
-# define SCRL_UP 4
-# define SCRL_DWN 5
+# define SCROLL_UP 4
+# define SCROLL_DOWN 5
 
 typedef struct	s_keys
 {

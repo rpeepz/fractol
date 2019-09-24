@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 13:14:09 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/22 04:59:21 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/23 23:03:14 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,31 @@
 
 int		hook_mousedown(int btn, int x, int y, t_frac *frac)
 {
-	int		zoom;
+	float		zoom;
 
 	(void)x;
 	(void)y;
-	if (btn == SCRL_UP || (btn == SCRL_DWN && frac->max_i > 0))
+	if (btn == SCROLL_UP || (btn == SCROLL_DOWN))
 	{
 		zoom = (frac->cam->zoom / 100 + 1);
-		if (btn == SCRL_UP)
-			frac->cam->zoom += zoom;
-		else if (btn == SCRL_DWN)
-			frac->cam->zoom -= zoom;
-		render(frac);
-		printf("%f\n", frac->cam->zoom);
+		if (btn == SCROLL_DOWN && (zoom > frac->cam->zoom))
+			printf("Minimum Zoom reached\n");
+		else
+		{
+			if (btn == SCROLL_UP && ft_out(btn))
+				frac->cam->zoom += zoom;
+			else if (btn == SCROLL_DOWN && ft_out(btn))
+				frac->cam->zoom -= zoom;
+			printf("%f\n", frac->cam->zoom);
+			render(frac);
+		}
 	}
-	return (0);
-}
-
-int		hook_mouseup(int button, int x, int y, t_frac *frac)
-{
-	(void)x;
-	(void)y;
-	frac->in->misdown &= ~(1 << button);
 	return (0);
 }
 
 int		hook_mousemove(int x, int y, t_frac *frac)
 {
-	if (!frac->in->lock && frac->type)
+	if (!frac->in->lock && !(frac->type % 2))
 	{
 		if (x > 0 && y > 0 && x < WIDTH && y < HEIGHT)
 		{
@@ -49,8 +46,8 @@ int		hook_mousemove(int x, int y, t_frac *frac)
 			frac->in->mlasty = frac->in->my;
 			frac->in->mx = x;
 			frac->in->my = y;
+			render(frac);
 		}
-		render(frac);
 	}
 	else
 	{
@@ -59,30 +56,44 @@ int		hook_mousemove(int x, int y, t_frac *frac)
 	return (0);
 }
 
+void	in_key(t_frac *frac, int key)
+{
+	if (key == KEY_PLUS && ft_out(key))
+		frac->max_i += 10;
+	else if (key == KEY_MINUS)
+	{
+		if (frac->max_i > 6 && ft_out(key))
+			frac->max_i -= 5;
+		else
+			printf("key: '-' max itterations - 0\n");
+	}
+	else if ((key == KEY_UP || key == KEY_DOWN) && ft_out(key))
+		frac->cam->offsety -= (key == KEY_UP) ? 0.01 : -0.01;
+	else if ((key == KEY_RIGHT || key == KEY_LEFT) && ft_out(key))
+		frac->cam->offsetx -= (key == KEY_LEFT) ? 0.01 : -0.01;
+}
+
 int		hook_keydown(int key, t_frac *frac)
 {
-	(void)frac;
-	ft_printf("key: %d\n", key);
-	ft_printf("lock: %d\n", frac->in->lock);
-	if (key == KEY_ESC)
-		exit(EXIT_SUCCESS);
-	if (key == KEY_PLUS)
-		frac->cam->scale += 10;
-	if (key == KEY_MINUS)
-		frac->cam->scale -= 5;
-	if (key == KEY_UP || key == KEY_DOWN)
-		frac->cam->offsety += (key == KEY_UP) ? 0.1 : -0.1;
-	if (key == KEY_RIGHT || key == KEY_LEFT)
-		frac->cam->offsetx += (key == KEY_LEFT) ? 0.1 : -0.1;
-	if (key == KEY_R)
+	if (key == KEY_PLUS || key == KEY_MINUS ||
+		key == KEY_UP || key == KEY_DOWN ||
+		key == KEY_RIGHT || key == KEY_LEFT)
+		in_key(frac, key);
+	else if (key == KEY_R && ft_out(key))
 	{
-		frac->cam->scale = 0;
-		frac->cam->zoom = 0.5;
+		frac->max_i = 60;
+		frac->cam->zoom = 1.01;
 	}
-	if (key == KEY_C)
+	else if (key == KEY_P && printf("Key: 'P' Psych: %s\n",
+		frac->in->psy ? "Off" : "On"))
+		frac->in->psy = (frac->in->psy) ? 0 : 1;
+	else if (key == KEY_C && printf("Key: 'C' Lock: %s\n",
+		frac->in->lock ? "Off" : "On"))
 		frac->in->lock = (frac->in->lock) ? 0 : 1;
-	if (key == KEY_SPACE)
+	else if (key == KEY_SPACE && ft_out(key))
 		frac->palette = frac->palette->next;
+	else if (key == KEY_ESC && ft_out(key))
+		exit(EXIT_SUCCESS);
 	render(frac);
 	return (0);
 }

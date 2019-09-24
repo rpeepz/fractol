@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/09 00:09:32 by rpapagna          #+#    #+#              #
-#    Updated: 2019/09/22 02:44:36 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/09/23 20:36:23 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ NC		= \033[0m
 SRC		= init.c \
 		inputs.c \
 		main.c \
-		render.c
+		render.c \
+		utils.c
 
 FLAGS	= -Wall -Wextra -Werror
 INC		= -I fractol.h
