@@ -6,11 +6,39 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 13:14:09 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/23 23:03:14 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/24 14:49:21 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fractol.h"
+
+int		ft_out(int key)
+{
+	IF_RETURN(DEBUG == 0, 1);
+	if (key == KEY_PLUS)
+		printf("Max itterations + 10\n");
+	else if (key == KEY_MINUS)
+		printf("Max itterations - 5\n");
+	else if (key == KEY_UP)
+		printf("Offset Y + 0.01\n");
+	else if (key == KEY_DOWN)
+		printf("Offset Y - 0.01\n");
+	else if (key == KEY_LEFT)
+		printf("Offset X - 0.01\n");
+	else if (key == KEY_RIGHT)
+		printf("Offset X + 0.01\n");
+	else if (key == KEY_R)
+		printf("Reset Zoom & Itteration\n");
+	else if (key == KEY_SPACE)
+		printf("Next Color palette\n");
+	else if (key == SCROLL_UP)
+		printf("Zoom level + ");
+	else if (key == SCROLL_DOWN)
+		printf("Zoom level - ");
+	else if (key == KEY_ESC)
+		printf("Goodbye!\n");
+	return (1);
+}
 
 int		hook_mousedown(int btn, int x, int y, t_frac *frac)
 {
@@ -29,7 +57,8 @@ int		hook_mousedown(int btn, int x, int y, t_frac *frac)
 				frac->cam->zoom += zoom;
 			else if (btn == SCROLL_DOWN && ft_out(btn))
 				frac->cam->zoom -= zoom;
-			printf("%f\n", frac->cam->zoom);
+			if (DEBUG)
+				printf("%f\n", frac->cam->zoom);
 			render(frac);
 		}
 	}
@@ -64,7 +93,7 @@ void	in_key(t_frac *frac, int key)
 	{
 		if (frac->max_i > 6 && ft_out(key))
 			frac->max_i -= 5;
-		else
+		else if (DEBUG)
 			printf("key: '-' max itterations - 0\n");
 	}
 	else if ((key == KEY_UP || key == KEY_DOWN) && ft_out(key))
