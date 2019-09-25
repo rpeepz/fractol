@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 20:11:33 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/23 23:07:52 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/24 17:03:30 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,16 @@ void	get_frac(t_frac *frac, t_pix *pix)
 	}
 }
 
-double	abs_double(double value)
-{
-	return (value < 0 ? -value : value);
-}
-
-size_t	define_pixel(size_t x, size_t y, t_frac *frac, t_pix *pix)
+size_t	define_pixel(t_point pixel, t_frac *frac, t_pix *pix)
 {
 	size_t		n;
 	double		aa;
 	double		bb;
 	double		twoab;
 
-	pix->a = (map_zeromin(x, WIDTH, pix->xmin, pix->xmax) /
+	pix->a = (map_zeromin(pixel.x, WIDTH, pix->xmin, pix->xmax) /
 		(frac->cam->zoom));
-	pix->b = (map_zeromin(y, HEIGHT, pix->ymin, pix->ymax) /
+	pix->b = (map_zeromin(pixel.y, HEIGHT, pix->ymin, pix->ymax) /
 		(frac->cam->zoom));
 	get_frac(frac, pix);
 	n = 0;
@@ -87,28 +82,29 @@ size_t	define_pixel(size_t x, size_t y, t_frac *frac, t_pix *pix)
 
 void	render(t_frac *frac)
 {
-	size_t		x;
-	size_t		y;
+	t_point		pixel;
 	size_t		n;
 	t_pix		pix;
 
 	ft_bzero(frac->image->ptr, WIDTH * HEIGHT * frac->image->bpp);
-	init_pix(&pix);
-	pix.xmin = pix.xmin - (WIDTH / 2) + frac->cam->offsetx;
-	pix.ymin = pix.ymin - (HEIGHT / 2) + frac->cam->offsety;
-	pix.xmax = pix.xmax - (WIDTH / 2) + frac->cam->offsetx;
-	pix.ymax = pix.ymax - (HEIGHT / 2) + frac->cam->offsety;
-	x = -1;
-	while (++x < WIDTH)
+	init_pix(&pix, frac);
+	if (!THREAD_MODE)
 	{
-		y = -1;
-		while (++y < HEIGHT)
+		pixel.x = -1;
+		while (++pixel.x < WIDTH)
 		{
-			n = define_pixel(x, y, frac, &pix);
-			get_color(frac, &pix, n);
-			*(int *)(frac->image->ptr + (x + y * WIDTH) * frac->image->bpp) =
-				(int)rbg_color(pix.color[0], pix.color[1], pix.color[2]);
+			pixel.y = -1;
+			while (++pixel.y < HEIGHT)
+			{
+				n = define_pixel(pixel, frac, &pix);
+				get_color(frac, &pix, n);
+				*(int *)(frac->image->ptr +
+				(pixel.x + pixel.y * WIDTH) * frac->image->bpp) =
+					(int)rbg_color(pix.color[0], pix.color[1], pix.color[2]);
+			}
 		}
 	}
+	else
+		render_thread(frac, pix);
 	mlx_put_image_to_window(frac->mlx, frac->window, frac->image->image, 0, 0);
 }

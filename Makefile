@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/09 00:09:32 by rpapagna          #+#    #+#              #
-#    Updated: 2019/09/23 20:36:23 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/09/24 14:32:07 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC		= init.c \
 		inputs.c \
 		main.c \
 		render.c \
+		thread.c \
 		utils.c
 
 FLAGS	= -Wall -Wextra -Werror

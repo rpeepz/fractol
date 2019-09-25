@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 02:06:55 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/23 23:06:11 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/24 17:03:24 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,14 @@
 # include "minilibx/includes/mlx.h"
 # include "keys.h"
 # include <math.h>
+# include <pthread.h>
 # include <stdio.h>
 
 # define USAGE "usage: ./fractol [ 1 | 2 | 3 ]"
 # define WIDTH 1000
 # define HEIGHT 1000
+# define DEBUG 0
+# define THREAD_MODE 8
 
 /*
 **	STRUCTS
@@ -98,16 +101,25 @@ typedef struct			s_point
 	size_t				y;
 }						t_point;
 
+typedef struct			s_thread_ptr
+{
+	t_frac				*frac;
+	t_pix				pix;
+	int					i;
+}						t_thread_ptr;
+
 void					render(t_frac *frac);
+void					render_thread(t_frac *frac, t_pix pix);
+size_t					define_pixel(t_point pixel, t_frac *frac, t_pix *pix);
+void					get_color(t_frac *frac, t_pix *pix, size_t n);
 void					set_palettes(t_frac *frac, int i);
 int						rbg_color(int r, int g, int b);
+double					abs_double(double value);
 
 t_frac					*init(char *title, int type);
 t_frac					*del_frac(t_frac *frac);
 t_image					*del_image(t_frac *frac, t_image *img);
-void					init_pix(t_pix *pix);
-
-int						ft_out(int key);
+void					init_pix(t_pix *pix, t_frac *frac);
 
 double					map_zeromin(double in_value, double in_max,
 									double start, double end);
