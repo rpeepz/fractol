@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 02:06:55 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/24 17:03:24 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/24 18:24:05 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 # define WIDTH 1000
 # define HEIGHT 1000
 # define DEBUG 0
-# define THREAD_MODE 8
+# define CORE_MODE 0
+# define THREAD_COUNT 8
 
 /*
 **	STRUCTS

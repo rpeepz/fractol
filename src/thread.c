@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 12:40:37 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/24 17:03:55 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/24 18:23:58 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void    *thread_op(void *arg)
 	p = (t_thread_ptr *)arg;
 	frac = p->frac;
 	pix = p->pix;
-	pixel.x = ((WIDTH / THREAD_MODE) * (p->i)) - 1;
-	while (++(pixel.x) < (size_t)((WIDTH / THREAD_MODE) * (p->i + 1)))
+	pixel.x = ((WIDTH / THREAD_COUNT) * (p->i)) - 1;
+	while (++(pixel.x) < (size_t)((WIDTH / THREAD_COUNT) * (p->i + 1)))
 	{
 		pixel.y = -1;
 		while (++(pixel.y) < HEIGHT)
@@ -47,18 +47,16 @@ void	render_thread(t_frac *frac, t_pix pix)
 
 	p.frac = frac;
 	p.pix = pix;
-    t = malloc(sizeof(pthread_t) * (THREAD_MODE));
-	i = 0;
-	while (i < (THREAD_MODE))
+    t = malloc(sizeof(pthread_t) * (THREAD_COUNT));
+	i = -1;
+	while (++i < (THREAD_COUNT))
 	{
 		p.i = i;
 		pthread_create(&t[i], NULL, thread_op, (void *)&p);
-		i++;
 	}
-	i = 0;
-	while (i < (THREAD_MODE))
+	i = -1;
+	while (++i < (THREAD_COUNT))
 	{
 		pthread_join(t[i], NULL);
-		i++;
 	}
 }

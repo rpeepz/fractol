@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 20:11:33 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/24 17:03:30 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/24 18:23:23 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	render(t_frac *frac)
 
 	ft_bzero(frac->image->ptr, WIDTH * HEIGHT * frac->image->bpp);
 	init_pix(&pix, frac);
-	if (!THREAD_MODE)
+	if (!CORE_MODE)
 	{
 		pixel.x = -1;
 		while (++pixel.x < WIDTH)
