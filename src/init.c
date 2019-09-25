@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 13:14:09 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/23 22:56:49 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/24 13:18:24 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_image		*new_image(t_frac *frac)
 	return (img);
 }
 
-void		init_pix(t_pix *pix)
+void		init_pix(t_pix *pix, t_frac *frac)
 {
 	pix->w = 5;
 	pix->h = (pix->w * HEIGHT) / WIDTH;
@@ -34,6 +34,10 @@ void		init_pix(t_pix *pix)
 	pix->ymin = -(pix->h / 2);
 	pix->xmax = pix->xmin + pix->w;
 	pix->ymax = pix->ymin + pix->h;
+	pix->xmin = pix->xmin - (WIDTH / 2) + frac->cam->offsetx;
+	pix->ymin = pix->ymin - (HEIGHT / 2) + frac->cam->offsety;
+	pix->xmax = pix->xmax - (WIDTH / 2) + frac->cam->offsetx;
+	pix->ymax = pix->ymax - (HEIGHT / 2) + frac->cam->offsety;
 }
 
 t_frac		*del_frac(t_frac *frac)

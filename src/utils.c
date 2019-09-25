@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 20:35:44 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/23 22:25:20 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/24 12:39:01 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,9 @@ int		rbg_color(int r, int g, int b)
 	return (r << 16 | g << 8 | b);
 }
 
-int		ft_out(int key)
+double	abs_double(double value)
 {
-	if (key == KEY_PLUS)
-		printf("Max itterations + 10\n");
-	else if (key == KEY_MINUS)
-		printf("Max itterations - 5\n");
-	else if (key == KEY_UP)
-		printf("Offset Y + 0.01\n");
-	else if (key == KEY_DOWN)
-		printf("Offset Y - 0.01\n");
-	else if (key == KEY_LEFT)
-		printf("Offset X - 0.01\n");
-	else if (key == KEY_RIGHT)
-		printf("Offset X + 0.01\n");
-	else if (key == KEY_R)
-		printf("Reset Zoom & Itteration\n");
-	else if (key == KEY_SPACE)
-		printf("Next Color palette\n");
-	else if (key == SCROLL_UP)
-		printf("Zoom level + ");
-	else if (key == SCROLL_DOWN)
-		printf("Zoom level - ");
-	else if (key == KEY_ESC)
-		printf("Goodbye!\n");
-	return (1);
+	return (value < 0 ? -value : value);
 }
 
 void	set_psych(t_frac *frac)
