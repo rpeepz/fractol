@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 20:35:44 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/25 17:56:08 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/26 00:51:20 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int		ft_out(int key)
 		printf("Zoom level + ");
 	else if (key == SCROLL_DOWN)
 		printf("Zoom level - ");
+	else if (key == -42)
+		printf("Malloc Error\n");
 	return (1);
 }
 

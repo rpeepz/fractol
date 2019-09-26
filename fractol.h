@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 02:06:55 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/25 20:24:44 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/26 00:57:28 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,15 +119,16 @@ void					render_thread(t_frac *frac, t_pix pix);
 size_t					define_pixel(t_point pixel, t_frac *frac, t_pix *pix);
 void					get_color(t_frac *frac, t_pix *pix, size_t n);
 
-t_frac					*init(char *title, int type);
-t_frac					*del_frac(t_frac *frac);
+int						del_palettes(t_frac **fractol);
 t_image					*del_image(t_frac *frac, t_image *img);
+t_frac					*del_frac(t_frac **fractol, int i);
+t_frac					*init(char *title, int type);
 void					init_pix(t_pix *pix, t_frac *frac);
 
 int						ft_help(void);
 int						ft_out(int key);
 int						rbg_color(int r, int g, int b);
-void					set_palettes(t_frac *frac, int i);
+int						set_palettes(t_frac *frac, int i);
 
 int						hook_keydown(int key, t_frac *frac);
 int						hook_mousedown(int button, int x, int y, t_frac *frac);

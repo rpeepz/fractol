@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 13:14:09 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/25 18:40:21 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/26 00:53:35 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int				hook_keydown(int key, t_frac *frac)
 	{
 		if (DEBUG)
 			system("leaks fractol");
-		exit(EXIT_SUCCESS);
+		exit((int)del_frac(&frac, 0));
 	}
 	IF_THEN(VALID_IN1(key) || VALID_IN2(key) || VALID_IN3(key), render(frac));
 	return (0);

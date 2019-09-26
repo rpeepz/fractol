@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 13:14:09 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/25 17:47:05 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/26 00:49:44 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,6 @@ static t_image	*new_image(t_frac *frac)
 	return (img);
 }
 
-t_frac			*del_frac(t_frac *frac)
-{
-	if (frac->win != NULL)
-		mlx_destroy_window(frac->mlx, frac->win);
-	if (frac->in != NULL)
-		ft_memdel((void **)&frac->in);
-	if (frac->image != NULL)
-		del_image(frac, frac->image);
-	ft_memdel((void **)&frac);
-	return (NULL);
-}
-
 t_image			*del_image(t_frac *frac, t_image *img)
 {
 	if (img != NULL)
@@ -60,6 +48,26 @@ t_image			*del_image(t_frac *frac, t_image *img)
 			mlx_destroy_image(frac->mlx, img->image);
 		ft_memdel((void **)&img);
 	}
+	return (NULL);
+}
+
+t_frac			*del_frac(t_frac **fractol, int i)
+{
+	t_frac	*frac;
+
+	frac = *fractol;
+	if (i)
+		i = del_palettes(fractol);
+	while (i < 10)
+		IF_THEN(frac->psych[i], ft_memdel((void **)&frac->psych[i++]));
+	IF_THEN(frac->psych, free(frac->psych));
+	IF_THEN(frac->palette, ft_memdel((void **)&frac->palette));
+	IF_THEN(frac->cam != NULL, ft_memdel((void **)&frac->cam));
+	IF_THEN(frac->image != NULL, del_image(frac, frac->image));
+	IF_THEN(frac->in != NULL, ft_memdel((void **)&frac->in));
+	IF_THEN(frac->win != NULL, mlx_destroy_window(frac->mlx, frac->win));
+	IF_THEN(frac->mlx != NULL, ft_memdel((void **)&frac->mlx));
+	ft_memdel((void **)&frac);
 	return (NULL);
 }
 
@@ -76,9 +84,10 @@ t_frac			*init(char *title, int type)
 		!(frac->cam = ft_memalloc(sizeof(t_cam))) ||
 		!(frac->palette = ft_memalloc(sizeof(t_palette))) ||
 		!(frac->psych = ft_memalloc(sizeof(t_psych *) * 11)))
-		return (del_frac(frac));
+		return (del_frac(&frac, 0));
 	frac->psych[10] = NULL;
-	set_palettes(frac, 0);
+	if (set_palettes(frac, 0))
+		return (del_frac(&frac, 1));
 	frac->type = type;
 	frac->max_i = 60;
 	frac->in->mx = ((WIDTH * 70) / 100);

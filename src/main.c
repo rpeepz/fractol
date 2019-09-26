@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 05:02:30 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/25 17:57:13 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/26 00:29:13 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int		main(int ac, char **av)
 	else
 		return (ft_printf("%s\n", USAGE));
 	ft_help();
-	frac = init("fractol", type);
+	if (!(frac = init("fractol", type)))
+		return (ft_out(-42));
 	render(frac);
 	mlx_key_hook(frac->win, hook_keydown, frac);
 	mlx_hook(frac->win, 4, 0, hook_mousedown, frac);
