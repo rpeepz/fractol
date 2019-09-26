@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/05/09 00:09:32 by rpapagna          #+#    #+#              #
-#    Updated: 2019/09/25 16:13:09 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/09/25 20:01:52 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ SRC		= init.c \
 		utils.c \
 		z_color.c
 
-FLAGS	= -Wall -Wextra -Werror
+FLAGS	= -Wall -Wextra -Werror -o2
 INC		= -I fractol.h
 #MLX COMPILE ORDER
 MLX_LNK	= -L ./minilibx_macos -l mlx_macos -framework AppKit -framework OpenGL
