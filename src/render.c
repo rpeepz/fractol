@@ -6,7 +6,7 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 20:11:33 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/24 18:23:23 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:43:26 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ void	get_color(t_frac *frac, t_pix *pix, size_t n)
 	else
 	{
 		pix->color[0] = frac->palette->color[0] +
-			map_zeromin(n, frac->max_i, 0, 255);
+			map_zero(n, frac->max_i, 0, 255);
 		pix->color[1] = frac->palette->color[1] +
-			map_zeromin(n, frac->max_i, 0, 255);
+			map_zero(n, frac->max_i, 0, 255);
 		pix->color[2] = frac->palette->color[2] +
-			map_zeromin(n, frac->max_i, 0, 255);
+			map_zero(n, frac->max_i, 0, 255);
 	}
 	if (n == frac->max_i)
 	{
@@ -39,15 +39,15 @@ void	get_color(t_frac *frac, t_pix *pix, size_t n)
 
 void	get_frac(t_frac *frac, t_pix *pix)
 {
-	if (frac->type == 1 || frac->type == 3)
+	if (frac->type % 2)
 	{
-		pix->complex[0] = pix->a;
-		pix->complex[1] = pix->b;
+		pix->c[0] = pix->a;
+		pix->c[1] = pix->b;
 	}
 	else
 	{
-		pix->complex[0] = map_zeromin(frac->in->my, HEIGHT, -1.5, 1.5);
-		pix->complex[1] = map_zeromin(frac->in->mx, WIDTH, -1.5, 1.5);
+		pix->c[0] = map_zero(frac->in->my, HEIGHT, -1.5, 1.5);
+		pix->c[1] = map_zero(frac->in->mx, WIDTH, -1.5, 1.5);
 	}
 }
 
@@ -58,9 +58,9 @@ size_t	define_pixel(t_point pixel, t_frac *frac, t_pix *pix)
 	double		bb;
 	double		twoab;
 
-	pix->a = (map_zeromin(pixel.x, WIDTH, pix->xmin, pix->xmax) /
+	pix->a = (map_zero(pixel.x, WIDTH, pix->xmin, pix->xmax) /
 		(frac->cam->zoom));
-	pix->b = (map_zeromin(pixel.y, HEIGHT, pix->ymin, pix->ymax) /
+	pix->b = (map_zero(pixel.y, HEIGHT, pix->ymin, pix->ymax) /
 		(frac->cam->zoom));
 	get_frac(frac, pix);
 	n = 0;
@@ -69,10 +69,10 @@ size_t	define_pixel(t_point pixel, t_frac *frac, t_pix *pix)
 		aa = pix->a * pix->a;
 		bb = pix->b * pix->b;
 		twoab = 2.0 * pix->a * pix->b;
-		pix->a = frac->type > 2 ? abs_double(aa - bb + pix->complex[0]) :
-											aa - bb + pix->complex[0];
-		pix->b = frac->type > 2 ? abs_double(twoab) + pix->complex[1] :
-											twoab + pix->complex[1];
+		pix->a = frac->type > 2 ?
+			abs_double(aa - bb + pix->c[0]) : aa - bb + pix->c[0];
+		pix->b = frac->type > 2 ?
+			abs_double(twoab) + pix->c[1] : twoab + pix->c[1];
 		if (pix->a * pix->a + pix->b * pix->b > 4)
 			break ;
 		n++;
@@ -106,5 +106,5 @@ void	render(t_frac *frac)
 	}
 	else
 		render_thread(frac, pix);
-	mlx_put_image_to_window(frac->mlx, frac->window, frac->image->image, 0, 0);
+	mlx_put_image_to_window(frac->mlx, frac->win, frac->image->image, 0, 0);
 }

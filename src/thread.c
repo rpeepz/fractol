@@ -6,21 +6,21 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 12:40:37 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/24 18:23:58 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/25 18:41:21 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fractol.h"
 
-void    *thread_op(void *arg)
+void	*thread_op(void *arg)
 {
-	t_thread_ptr	*p;
+	t_frac_thread	*p;
 	t_frac			*frac;
 	t_pix			pix;
 	t_point			pixel;
 	size_t			n;
 
-	p = (t_thread_ptr *)arg;
+	p = (t_frac_thread *)arg;
 	frac = p->frac;
 	pix = p->pix;
 	pixel.x = ((WIDTH / THREAD_COUNT) * (p->i)) - 1;
@@ -36,23 +36,22 @@ void    *thread_op(void *arg)
 				(int)rbg_color(pix.color[0], pix.color[1], pix.color[2]);
 		}
 	}
-	return (NULL);
+	pthread_exit(NULL);
 }
 
 void	render_thread(t_frac *frac, t_pix pix)
 {
-	t_thread_ptr	p;
-    pthread_t		*t;
+	t_frac_thread	p[THREAD_COUNT];
+	pthread_t		t[THREAD_COUNT];
 	int				i;
 
-	p.frac = frac;
-	p.pix = pix;
-    t = malloc(sizeof(pthread_t) * (THREAD_COUNT));
 	i = -1;
 	while (++i < (THREAD_COUNT))
 	{
-		p.i = i;
-		pthread_create(&t[i], NULL, thread_op, (void *)&p);
+		p[i].frac = frac;
+		p[i].pix = pix;
+		p[i].i = i;
+		pthread_create(&t[i], NULL, thread_op, &p[i]);
 	}
 	i = -1;
 	while (++i < (THREAD_COUNT))

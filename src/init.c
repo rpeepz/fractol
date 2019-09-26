@@ -6,27 +6,13 @@
 /*   By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 13:14:09 by rpapagna          #+#    #+#             */
-/*   Updated: 2019/09/24 13:18:24 by rpapagna         ###   ########.fr       */
+/*   Updated: 2019/09/25 17:47:05 by rpapagna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fractol.h"
 
-t_image		*new_image(t_frac *frac)
-{
-	t_image		*img;
-
-	if (!(img = ft_memalloc(sizeof(t_image))))
-		return (NULL);
-	if (!(img->image = mlx_new_image(frac->mlx, WIDTH, HEIGHT)))
-		return (del_image(frac, img));
-	img->ptr = mlx_get_data_addr(img->image, &img->bpp, &img->stride,
-			&img->endian);
-	img->bpp /= 8;
-	return (img);
-}
-
-void		init_pix(t_pix *pix, t_frac *frac)
+void			init_pix(t_pix *pix, t_frac *frac)
 {
 	pix->w = 5;
 	pix->h = (pix->w * HEIGHT) / WIDTH;
@@ -40,10 +26,24 @@ void		init_pix(t_pix *pix, t_frac *frac)
 	pix->ymax = pix->ymax - (HEIGHT / 2) + frac->cam->offsety;
 }
 
-t_frac		*del_frac(t_frac *frac)
+static t_image	*new_image(t_frac *frac)
 {
-	if (frac->window != NULL)
-		mlx_destroy_window(frac->mlx, frac->window);
+	t_image		*img;
+
+	if (!(img = ft_memalloc(sizeof(t_image))))
+		return (NULL);
+	if (!(img->image = mlx_new_image(frac->mlx, WIDTH, HEIGHT)))
+		return (del_image(frac, img));
+	img->ptr = mlx_get_data_addr(img->image, &img->bpp, &img->stride,
+			&img->endian);
+	img->bpp /= 8;
+	return (img);
+}
+
+t_frac			*del_frac(t_frac *frac)
+{
+	if (frac->win != NULL)
+		mlx_destroy_window(frac->mlx, frac->win);
 	if (frac->in != NULL)
 		ft_memdel((void **)&frac->in);
 	if (frac->image != NULL)
@@ -52,7 +52,7 @@ t_frac		*del_frac(t_frac *frac)
 	return (NULL);
 }
 
-t_image		*del_image(t_frac *frac, t_image *img)
+t_image			*del_image(t_frac *frac, t_image *img)
 {
 	if (img != NULL)
 	{
@@ -63,14 +63,14 @@ t_image		*del_image(t_frac *frac, t_image *img)
 	return (NULL);
 }
 
-t_frac		*init(char *title, int type)
+t_frac			*init(char *title, int type)
 {
 	t_frac	*frac;
 
 	if (!(frac = ft_memalloc(sizeof(t_frac))))
 		return (NULL);
 	if (!(frac->mlx = mlx_init()) ||
-		!(frac->window = mlx_new_window(frac->mlx, WIDTH, HEIGHT, title)) ||
+		!(frac->win = mlx_new_window(frac->mlx, WIDTH, HEIGHT, title)) ||
 		!(frac->in = ft_memalloc(sizeof(t_input))) ||
 		!(frac->image = new_image(frac)) ||
 		!(frac->cam = ft_memalloc(sizeof(t_cam))) ||
