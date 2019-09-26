@@ -14,6 +14,7 @@ Usage: `./fractol [ 1 | 2 | 3 | 4 | help ]`
 - 4: Julia (with absolute values)
 
 <br>
+
 ---
 # compatiblity
 #### macOS / UNIX / POSIX
