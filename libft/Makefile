@@ -6,7 +6,7 @@
 #    By: rpapagna <rpapagna@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/13 21:22:38 by rpapagna          #+#    #+#              #
-#    Updated: 2019/06/20 04:56:49 by rpapagna         ###   ########.fr        #
+#    Updated: 2019/09/25 17:27:28 by rpapagna         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,13 +28,15 @@ LIB_PATH	= srcs
 PRNTF_PATH	=$(LIB_PATH)/ft_printf
 SPRNTF_PATH	=$(LIB_PATH)/ft_sprintf
 
-SRCS	= ft_atoi.c \
+SRCS	= ft_abs.c \
+		ft_atoi.c \
 		ft_itoa_base.c \
 		ft_islower.c \
 		ft_isupper.c \
 		ft_isvariants.c \
 		ft_lstadd.c \
 		ft_lstnew.c \
+		ft_map.c \
 		ft_memalloc.c \
 		ft_memchr.c \
 		ft_memcpy.c \
