@@ -15,6 +15,8 @@ Usage: `./fractol [ 1 | 2 | 3 | 4 | help ]`
 
 <br>
 
+![](https://media.giphy.com/media/U8H192hettRwXQHf3I/giphy.gif "fractal test")
+
 ---
 # compatiblity
 #### macOS / UNIX / POSIX
